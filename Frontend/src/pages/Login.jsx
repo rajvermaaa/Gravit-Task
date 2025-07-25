@@ -3,12 +3,8 @@ import { authAPI } from "../services/api";
 import React, { useState } from "react";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState('');
-
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -21,17 +17,12 @@ const Login = () => {
 
     try {
       const res = await authAPI.post('/login', formData);
-      console.log("Login response:", res.data); // 👈 Debug log
-
       if (res.data?.token) {
         localStorage.setItem('token', res.data.token);
         localStorage.setItem('user', JSON.stringify(res.data.user));
         navigate('/dashboard');
-      } else {
-        setError("No token received from server");
       }
     } catch (err) {
-      console.error("Login error:", err); // 👈 Debug log
       setError(err.response?.data?.message || "Login failed");
     }
   };
@@ -40,46 +31,27 @@ const Login = () => {
     <div className="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
       <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
         <h2 className="text-center mb-4">Login to Your Account</h2>
-
         {error && <div className="alert alert-danger text-center py-1">{error}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
+            <input type="email" name="email" value={formData.email}
+              onChange={handleChange} className="form-control" required />
           </div>
 
           <div className="mb-3">
             <label className="form-label">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
+            <input type="password" name="password" value={formData.password}
+              onChange={handleChange} className="form-control" required />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">
-            Login
-          </button>
+          <button type="submit" className="btn btn-primary w-100">Login</button>
         </form>
 
         <p className="text-center mt-3">
           Don’t have an account?{" "}
-          <span
-            className="text-primary text-decoration-underline"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/signup")}
-          >
+          <span className="text-primary text-decoration-underline" style={{ cursor: "pointer" }} onClick={() => navigate("/signup")}>
             Sign up
           </span>
         </p>

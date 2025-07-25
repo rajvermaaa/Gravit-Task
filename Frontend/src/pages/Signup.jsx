@@ -11,8 +11,8 @@ const Signup = () => {
   });
 
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -20,22 +20,14 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setMessage("");
+    setError('');
+    setMessage('');
 
     try {
-      const res = await authAPI.post("/signup", formData);
-      if (res?.data?.message) {
-        setMessage("Sign up successful! You are ready to login.");
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          password: "",
-        });
-
-        // Optionally redirect after 2 seconds
-        setTimeout(() => navigate("/login"), 2000);
+      const res = await authAPI.post('/signup', formData);
+      if (res.status === 201) {
+        setMessage('Sign up successful! Redirecting to login...');
+        setTimeout(() => navigate('/login'), 2000);
       }
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed");
@@ -44,7 +36,7 @@ const Signup = () => {
 
   return (
     <div className="container d-flex align-items-center justify-content-center min-vh-100 bg-light">
-      <div className="card p-4 shadow" style={{ maxWidth: "450px", width: "100%" }}>
+      <div className="card p-4 shadow" style={{ maxWidth: '450px', width: '100%' }}>
         <h2 className="text-center mb-4">Create your Account</h2>
 
         {message && <div className="alert alert-success text-center py-1">{message}</div>}
@@ -53,50 +45,26 @@ const Signup = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">First Name</label>
-            <input
-              type="text"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
+            <input type="text" name="firstName" value={formData.firstName}
+              onChange={handleChange} className="form-control" required />
           </div>
 
           <div className="mb-3">
             <label className="form-label">Last Name</label>
-            <input
-              type="text"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
+            <input type="text" name="lastName" value={formData.lastName}
+              onChange={handleChange} className="form-control" required />
           </div>
 
           <div className="mb-3">
             <label className="form-label">Email</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
+            <input type="email" name="email" value={formData.email}
+              onChange={handleChange} className="form-control" required />
           </div>
 
           <div className="mb-3">
             <label className="form-label">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="form-control"
-              required
-            />
+            <input type="password" name="password" value={formData.password}
+              onChange={handleChange} className="form-control" required />
           </div>
 
           <button type="submit" className="btn btn-primary w-100">
@@ -106,11 +74,7 @@ const Signup = () => {
 
         <p className="text-center mt-3">
           Already have an account?{" "}
-          <span
-            className="text-primary text-decoration-underline"
-            style={{ cursor: "pointer" }}
-            onClick={() => navigate("/login")}
-          >
+          <span className="text-primary text-decoration-underline" style={{ cursor: "pointer" }} onClick={() => navigate("/login")}>
             Login
           </span>
         </p>

@@ -1,14 +1,19 @@
-// src/services/api.js
-import axios from "axios";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 
-const BASE_URL = "https://gravit-task.onrender.com";
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
-export const authAPI = axios.create({
-  baseURL: `${BASE_URL}/api/auth`,
-  withCredentials: true,
-});
-
-export const taskAPI = axios.create({
-  baseURL: `${BASE_URL}/api/tasks`,
-  withCredentials: true,
-});
+export default App;
