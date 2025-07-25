@@ -25,12 +25,23 @@ const Signup = () => {
 
     try {
       const res = await authAPI.post('/signup', formData);
+      console.log("Signup response:", res.data); // 👈 For debugging
+
       if (res.status === 201) {
-        setMessage('Sign up successful! Redirecting to login...');
-        setTimeout(() => navigate('/login'), 2000);
+        setMessage('✅ Sign up successful! Redirecting to login...');
+        setTimeout(() => navigate('/login'), 1500);
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: ""
+        });
+      } else {
+        setError("⚠️ Unexpected response from server.");
       }
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed");
+      console.error("Signup error:", err);
+      setError(err?.response?.data?.message || "Signup failed");
     }
   };
 
@@ -45,26 +56,50 @@ const Signup = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="form-label">First Name</label>
-            <input type="text" name="firstName" value={formData.firstName}
-              onChange={handleChange} className="form-control" required />
+            <input
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
           </div>
 
           <div className="mb-3">
             <label className="form-label">Last Name</label>
-            <input type="text" name="lastName" value={formData.lastName}
-              onChange={handleChange} className="form-control" required />
+            <input
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
           </div>
 
           <div className="mb-3">
             <label className="form-label">Email</label>
-            <input type="email" name="email" value={formData.email}
-              onChange={handleChange} className="form-control" required />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
           </div>
 
           <div className="mb-3">
             <label className="form-label">Password</label>
-            <input type="password" name="password" value={formData.password}
-              onChange={handleChange} className="form-control" required />
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="form-control"
+              required
+            />
           </div>
 
           <button type="submit" className="btn btn-primary w-100">
@@ -74,7 +109,11 @@ const Signup = () => {
 
         <p className="text-center mt-3">
           Already have an account?{" "}
-          <span className="text-primary text-decoration-underline" style={{ cursor: "pointer" }} onClick={() => navigate("/login")}>
+          <span
+            className="text-primary text-decoration-underline"
+            style={{ cursor: "pointer" }}
+            onClick={() => navigate("/login")}
+          >
             Login
           </span>
         </p>
