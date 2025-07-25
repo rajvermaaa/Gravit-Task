@@ -25,7 +25,7 @@ const Signup = () => {
 
     try {
       const res = await authAPI.post('/signup', formData);
-      console.log("Signup response:", res.data); // 👈 For debugging
+      console.log("Signup response:", res.data); 
 
       if (res.status === 201) {
         setMessage('✅ Sign up successful! Redirecting to login...');
