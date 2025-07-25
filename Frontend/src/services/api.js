@@ -1,11 +1,18 @@
 import axios from "axios";
 
-const BASE_URL = "https://gravit-task.onrender.com/api";
+// Do NOT include /auth or /tasks here
+const BASE = "https://gravit-task.onrender.com/api";
 
 export const authAPI = axios.create({
-  baseURL: `${BASE_URL}/auth`,
+  baseURL: `${BASE}/auth`,
+  headers: {
+    "Content-Type": "application/json"
+  }
 });
 
 export const taskAPI = axios.create({
-  baseURL: `${BASE_URL}/tasks`,
+  baseURL: `${BASE}/tasks`,
+  headers: {
+    "Content-Type": "application/json"
+  }
 });
